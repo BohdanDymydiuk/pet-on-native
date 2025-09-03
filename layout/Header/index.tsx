@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import StyledText from "@/components/StyledText";
 import { COLORS } from "@/constants/Colors";
 import React from "react";
+import { getFullFormattedDate } from "@/helpers/date";
 
 type HeaderProps = {
   completedTodos: number;
@@ -9,11 +10,13 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ completedTodos, totalTodos }) => {
+  const formattedDateNow = getFullFormattedDate(new Date());
+
   return (
     <View style={styles.container}>
       <View style={styles.headerMainContent}>
-        <StyledText>Todo app</StyledText>
-        <StyledText>September 2, 2025</StyledText>
+        <StyledText variant="title">Todo app</StyledText>
+        <StyledText variant="subtitle">{formattedDateNow}</StyledText>
       </View>
       <StyledText>Completed: {completedTodos} / {totalTodos}</StyledText>
     </View>

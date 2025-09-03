@@ -1,20 +1,19 @@
 import { COLORS } from "@/constants/Colors";
+import useTodos from "@/hooks/useTodos";
 import Header from "@/layout/Header";
+import TodoCreator from "@/layout/TodoCreator";
 import TodoList from "@/layout/TodoList";
-import { Todo } from "@/types/todo";
-import { useState } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 
-const defaultTodos: Todo[] = [
-  { id: 1, title: "Вивчити Next.js", isCompleted: false },
-  { id: 2, title: "Вивчити React Mobile", isCompleted: true },
-  { id: 3, title: "Зробити Пет-проєкти", isCompleted: false },
-];
-
 export default function Index() {
-  const [todos, setTodos] = useState<Todo[]>(defaultTodos);
-
-  const completedTodos = todos.filter(todo => todo.isCompleted);
+  const { 
+    completedTodos, 
+    todos, 
+    onAddTodo, 
+    onDeleteTodo, 
+    onCheckTodo, 
+    onUpdateTodoTitle
+  } = useTodos();
 
   return (
     <View
@@ -22,7 +21,13 @@ export default function Index() {
     >
       <StatusBar barStyle={'light-content'} />
       <Header completedTodos={completedTodos.length} totalTodos={todos.length} />
-      <TodoList todos={todos} />
+      <TodoCreator onAddTodo={onAddTodo} />
+      <TodoList
+        todos={todos}
+        onDeleteTodo={onDeleteTodo}
+        onCheckTodo={onCheckTodo}
+        onUpdateTodoTitle={onUpdateTodoTitle}
+      />
     </View>
   );
 }
@@ -33,7 +38,3 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.PRIMARY_BACKGROUND
   }
 });
-
-
-// justifyContent: 'center',
-// alignItems: 'center',

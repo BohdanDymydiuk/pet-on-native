@@ -4,4 +4,7 @@ export const COLORS = {
   PRIMARY_TEXT: '#ffffff',
   PRIMATY_ACTIVE_BUTTON: '#005bf0',
   PRIMARY_RED: '#c83135',
+  SUCCESS: '#4caf50',
+  PRIMARY_BORDER: '#808080',
+  PLACEHOLDER: '#a0a0a0'
 };

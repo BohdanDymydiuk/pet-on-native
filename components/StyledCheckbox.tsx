@@ -1,3 +1,4 @@
+import { COLORS } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
@@ -8,9 +9,12 @@ type StyledCheckboxProps = {
 }
 
 const StyledCheckbox: React.FC<StyledCheckboxProps> = ({ checked, onCheck }) => {
+  const ioniconsName = checked ? 'checkmark-circle' : 'ellipse-outline';
+  const ioniconsColor = checked ? COLORS.SUCCESS : COLORS.PRIMARY_BORDER;
+
   return (
     <TouchableOpacity onPress={onCheck}>
-      <Ionicons name={checked ? 'checkmark-circle' : 'ellipse-outline'} size={24} color={'white'} />
+      <Ionicons name={ioniconsName} size={24} color={ioniconsColor} />
     </TouchableOpacity>
   );
 };
