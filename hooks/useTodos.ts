@@ -1,5 +1,6 @@
 import { Todo } from "@/types/todo";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { addTodo, removeTodo, selectTodo, toogleTodo, updateTodoTitle } from "@/store/slices/todoSlice";
 
 const defaultTodos: Todo[] = [
   { id: 1, title: "Learn Next.js", isCompleted: false },
@@ -7,27 +8,26 @@ const defaultTodos: Todo[] = [
   { id: 3, title: "Make PET-projects", isCompleted: false },
 ];
 
+const STORAGE_KEY = 'todos';
+
 const useTodos = () => {
-  const [todos, setTodos] = useState<Todo[]>(defaultTodos);
+  const todos = useAppSelector(selectTodo);
+  const dispatch = useAppDispatch();
 
   const onAddTodo = (title: Todo['title']) => {
-    setTodos(currentTodos => {
-      return [...currentTodos, { id: Number(new Date()), title, isCompleted: false }];
-    })
+    dispatch(addTodo({ id: Number(new Date()), title, isCompleted: false }));
   };
 
   const onDeleteTodo = (id: Todo['id']) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+    dispatch(removeTodo(id));
   };
 
   const onCheckTodo = (id: Todo['id']) => {
-    setTodos(todos.map(todo =>
-      (todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo)
-    ));
+    dispatch(toogleTodo(id));
   };
 
   const onUpdateTodoTitle = (id: Todo['id'], title: Todo['title']) => {
-    setTodos(todos.map(todo => (todo.id === id ? { ...todo, title } : todo)));
+    dispatch(updateTodoTitle({ id, title }));
   }
 
   const completedTodos = todos.filter(todo => todo.isCompleted);
